@@ -231,6 +231,49 @@ ativo + skill instalada + relatório entregue. Qualquer coisa fora disso é pend
 - Qualquer `needs_review`: o app NÃO sobrescreveu nada; relate o ID do contato/card impresso. Nunca tente "forçar" nem apagar.
 ````
 
+## Se o Hermes roda em Linux/Docker (por exemplo, falando com você pelo Telegram)
+
+O Hermes para no passo 1 quando vê que não está em Windows, e pergunta se pode adaptar. Responda "adaptar para Linux" e cole
+este complemento (ele vale no lugar do que estiver escrito para Windows; o resto do runbook e as regras 1 a 8 continuam
+valendo). Em Docker, só o volume do Hermes sobrevive a uma recriação do container, por isso o app vai para dentro do `HERMES_HOME`.
+
+````text
+COMPLEMENTO PARA LINUX/DOCKER. Siga em Linux. Estes ajustes valem no lugar do que estiver escrito para Windows.
+
+1) Pasta e comandos. PASTA_DE_INSTALACAO = $HERMES_HOME/apps/hermes-aih-bitrix (dentro do volume do Hermes, para sobreviver a
+recriação do container). Antes, confirme que o HERMES_HOME é um volume ou bind persistente (`grep " $HERMES_HOME " /proc/self/mountinfo`;
+compare `df $HERMES_HOME` com `df /`). Se não for, pare e me avise: nada do app sobreviveria a uma recriação. Troque
+`.\.venv\Scripts\python.exe` por `.venv/bin/python`, `py -3` por `python3` e PowerShell por bash. Python 3.10 atende.
+
+2) Código. O repositório é privado e este container não tem credencial do GitHub: NÃO use `git clone` e não peça token. Vou
+enviar neste chat um arquivo .zip. Salve-o, confira o sha256 (`sha256sum`), extraia direto na pasta (`python3 -m zipfile -e <zip>
+<pasta>`, ou `unzip`) e confirme que `run.py` existe. No relatório, informe o sha256 no lugar do `git rev-parse`.
+
+3) Ambiente virtual. `python3 -m venv .venv`. Se falhar com "ensurepip is not available", use `uv venv .venv --python python3`
+e `uv pip install --python .venv/bin/python -r requirements-dev.txt` (se o uv existir). Só rode `apt-get install -y python3.10-venv`
+se eu autorizar (é a única exceção à regra 5).
+
+4) Webhook (.env). ARQUIVO_COM_O_WEBHOOK fica vazio. Faça `cp .env.example .env && chmod 600 .env` e me diga o caminho completo; eu
+mesmo coloco o webhook dentro do container, nunca no chat. Continue quando eu disser "feito".
+
+5) Cron. Aqui o gateway é o próprio processo do container: confirme com `hermes cron status` (não instale serviço).
+O `hermes-install` usa o HERMES_HOME do ambiente e grava `skills/productivity/aih-bitrix/SKILL.md` e `scripts/aih_poll.py`.
+Preencha ENTREGA_DO_CRON e os AUTORIZO_* conforme o meu caso (se eu não disse, pergunte uma vez).
+````
+
+Para colocar o webhook no container sem passar por chat (você, no terminal do host do Docker; troque `<container>` pelo nome em
+`docker ps`; o webhook digitado não aparece na tela nem fica no histórico):
+
+```bash
+docker exec -it <container> bash -c 'read -rs -p "Webhook: " W; echo; sed -i "s|^BITRIX_WEBHOOK_URL=.*|BITRIX_WEBHOOK_URL=$W|" "${HERMES_HOME:-/root/.hermes}/apps/hermes-aih-bitrix/.env" && echo gravado'
+```
+
+Para gerar o `.zip` do repositório privado (somente os arquivos versionados, sem `.git`; não contém dado de paciente nem segredo):
+
+```bash
+git archive --format=zip -o hermes-aih-bitrix.zip HEAD
+```
+
 ## Depois da instalação: o que enviar para revisão
 
 * O **relatório final** do Hermes (passo 11), copiado sem edição.

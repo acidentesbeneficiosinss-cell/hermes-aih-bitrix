@@ -38,6 +38,19 @@ Se uma rodada passar do tempo limite de scripts do Hermes (120 s por padrão; ca
 
 **Rode o monitoramento em um único lugar**: este cron **ou** `serve --with-poller`, nunca os dois.
 
+### Hermes em Docker/Linux
+
+* Instale o app **dentro do volume do Hermes** (`$HERMES_HOME/apps/hermes-aih-bitrix`): em Docker só ele sobrevive a uma
+  recriação do container ou a uma atualização da imagem. A skill e o script de cron já ficam em `HERMES_HOME/skills` e
+  `HERMES_HOME/scripts`.
+* O gateway é o processo do container: `hermes cron status` deve mostrar o scheduler rodando (não instale serviço).
+* Repositório privado: o container não tem credencial do GitHub. Envie o `.zip` (`git archive --format=zip -o hermes-aih-bitrix.zip HEAD`)
+  ou use uma *deploy key* somente leitura; nunca cole token no chat.
+* Webhook: grave-o dentro do container com `docker exec -it <container> bash -c 'read -rs ...'` (comando pronto em
+  [`PROMPT_HERMES.md`](PROMPT_HERMES.md)), nunca pelo chat.
+* Se `python3 -m venv` falhar (Debian/Ubuntu sem `python3-venv`), use `uv venv` ou, com autorização, `apt-get install python3.10-venv`.
+* Já testado em Linux (Ubuntu, Python 3.10 a 3.14) pela CI do repositório.
+
 Para o agente processar um PDF que recebeu no chat, a skill manda: salvar o PDF → `ingest --dry-run` → resumir → `ingest`
 com a confirmação do usuário.
 
