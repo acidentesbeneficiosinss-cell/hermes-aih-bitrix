@@ -26,6 +26,8 @@ app já não contém dado pessoal) e aguarde minha orientação. Não improvise 
 - ENTREGA_DO_CRON: <para onde vão os avisos do poller: origin | local | telegram | discord | signal | plataforma:chat_id>
 - AUTORIZO_LER_LAUDOS_REAIS_EM_DRY_RUN: <sim | não>   (passo 7: só lê e imprime contagens e status, não grava)
 - AUTORIZO_SELFCHECK: <sim | não>   (passo 8: GRAVA 1 contato e 1 card de teste no Bitrix real)
+- AUTORIZO_GRAVACAO_AUTOMATICA_PELO_CRON: <sim | não>   (passo 9: com "sim" o cron cria/atualiza contatos e cards REAIS sozinho a
+  cada laudo novo do grupo; com "não" o cron é criado PAUSADO e eu o libero depois de revisar o relatório)
 - AUTORIZO_EDITAR_CONFIG_DO_HERMES: <sim | não>   (passo 9: timeout de scripts do cron e, se preciso, iniciar o gateway)
 - ARQUIVO_COM_O_WEBHOOK: <opcional: caminho de um arquivo de texto que contém a URL do webhook; se eu informar, autorizo você
   a copiar a URL para o .env sem exibi-la (atalho do passo 5); se ficar vazio, eu mesmo edito o .env>
@@ -43,12 +45,14 @@ NUNCA apaga nada. Códigos de saída: 0 ok · 1 pendência (needs_review/error/n
 1. Dado de paciente é dado de saúde (LGPD). Nunca leia o conteúdo de PDFs de pacientes; nunca copie nome, CPF, CNS,
    nascimento ou telefone para o chat, para a sua memória, para skills ou para arquivos. Use só as saídas dos comandos do
    app (elas já saem sem dado pessoal). NUNCA use `extract --show`.
-2. Segredos: nunca peça, mostre, repita ou grave o token do webhook do Bitrix24. Não abra nem imprima o `.env` do app, o
-   arquivo `bitrix.env.txt` nem o `.env` do Hermes. Quem coloca o webhook sou eu (passo 5).
+2. Segredos: nunca peça, mostre, repita ou grave o token do webhook do Bitrix24. Não exiba nem imprima o conteúdo do `.env`
+   do app, de qualquer arquivo que contenha o webhook, nem do `.env` do Hermes (o atalho opcional do passo 5 lê a URL por
+   script, sem exibi-la). Quem coloca o webhook sou eu (passo 5).
 3. Nunca apague nada. No Bitrix, nunca chame métodos `*.delete` (a lixeira da SPA está desligada: apagar é definitivo). No
    disco, só altere a PASTA_DE_INSTALACAO e os dois arquivos criados pelo `hermes-install`.
-4. Escritas no Bitrix real só com minha autorização explícita acima: `selfcheck`, `ingest` sem `--dry-run` e `poll` quando
-   já existe cursor. A 1ª rodada do poller só marca o ponto de partida do grupo (não grava no Bitrix).
+4. Escritas no Bitrix real só com minha autorização explícita acima: `selfcheck` (AUTORIZO_SELFCHECK), `ingest` sem
+   `--dry-run` e `poll` quando já existe cursor, o que inclui o cron (AUTORIZO_GRAVACAO_AUTOMATICA_PELO_CRON). A 1ª rodada do
+   poller só marca o ponto de partida do grupo (não grava no Bitrix).
 5. Instale somente o que está em `requirements-dev.txt`. Não execute scripts baixados, não use `curl | sh`, não envie
    código, logs ou saídas a serviços externos.
 6. Só altere o `config.yaml` do Hermes se AUTORIZO_EDITAR_CONFIG_DO_HERMES for "sim" (faça backup antes).
@@ -131,7 +135,8 @@ if ($m.Success) {
 & $py run.py discover
 & $py run.py ingest --dry-run AMOSTRA-FICTICIA-aih-a.pdf
 ```
-Esperado: `doctor` sem nenhum `[FAIL]` (o único `[WARN]` aceitável é "Chave da API", usada só no modo servidor); `discover`
+Esperado: `doctor` sem nenhum `[FAIL]` (o `[WARN]` de "Chave da API" é esperado: só o modo servidor a usa; qualquer outro `[WARN]`
+relate por extenso); `discover`
 mostra categoria 101, etapa `DT1146_101:NEW`, 5 campos de contato e 11 da SPA validados; o `ingest --dry-run` termina em
 `dry_run`. NADA é gravado nesses três comandos.
 
@@ -178,8 +183,12 @@ O cron é disparado pelo gateway do Hermes: `hermes cron status` precisa mostrar
 gateway (`hermes gateway install` ou `hermes gateway`) muda o Hermes, então só com AUTORIZO_EDITAR_CONFIG_DO_HERMES = sim.
 Cada laudo leva uns 15 s (espera de conferência), e o limite padrão de scripts do cron é 120 s. Se AUTORIZO_EDITAR_CONFIG_DO_HERMES
 = sim, faça backup do `config.yaml` e defina `cron.script_timeout_seconds: 600`; se não, apenas me avise desse limite.
+Se AUTORIZO_GRAVACAO_AUTOMATICA_PELO_CRON = não, pause o job logo após criá-lo (`hermes cron pause aih-bitrix-poller`), confirme
+no `hermes cron list` que ficou pausado e me diga que a liberação é `hermes cron resume aih-bitrix-poller`.
 
 ### Passo 10: verificação final do cron e da skill
+Só se AUTORIZO_GRAVACAO_AUTOMATICA_PELO_CRON = sim (uma rodada pode gravar laudos reais); com "não", pule este comando e informe
+que o cron está pausado:
 ```powershell
 hermes cron run aih-bitrix-poller
 ```
@@ -194,7 +203,7 @@ Entregue uma tabela com: Item | Resultado (PASS, FAIL ou NÃO FEITO) | Evidênci
 3. Dependências (versões)  4. pytest (passou/falhou)  5. doctor --offline  6. extract das 2 amostras (rótulos não reconhecidos = 0)
 7. .env configurado (sem exibir)  8. doctor online (contagens e cada WARN/FAIL por extenso)  9. discover (categoria, etapa, campos)
 10. ingest --dry-run da amostra  11. poll dry-run em laudos reais (contagem por status) ou NÃO FEITO  12. selfcheck (x/9) ou NÃO FEITO
-13. hermes-install (2 arquivos)  14. cron (nome, agenda, entrega, estado do gateway, última execução)  15. skill carregada.
+13. hermes-install (2 arquivos)  14. cron (nome, agenda, entrega, estado do gateway, pausado ou ativo, última execução)  15. skill carregada.
 Termine com "Pendências e riscos" (o que não foi verificado e por quê) e "Decisões que preciso de você" (por exemplo: liberar o
 `selfcheck`; trocar para um webhook dedicado e revogar o de permissão total; autorizar o `ingest` real para laudos recebidos
 no chat). Lembre-me de que a primeira gravação REAL do poller acontece quando chegar o primeiro laudo novo no grupo: quando
