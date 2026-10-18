@@ -233,6 +233,29 @@ def test_env_file_option_is_honoured(pdf_file, tmp_path, capsys):
     assert code == 0 and "dry_run" in out.out
 
 
+def test_an_explicit_environment_never_reads_a_dotenv_from_the_working_folder(pdf_file, tmp_path, monkeypatch, capsys):
+    # regressão real: rodar a suíte numa instalação que já tinha .env (webhook e LEDGER_PATH de verdade) gravou no ledger REAL
+    real_ledger = tmp_path / "data" / "ledger.sqlite3"
+    (tmp_path / ".env").write_text(
+        f"BITRIX_WEBHOOK_URL={WEBHOOK}\nLEDGER_PATH={real_ledger}\nOL_DIALOG_IDS=chat360293\n", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    fake = FakeBitrix()
+    code, out = run(["ingest", str(pdf_file)], {}, fake, capsys)  # ambiente explícito e vazio: vale sozinho
+    assert code == 2 and "BITRIX_WEBHOOK_URL" in out.err
+    assert fake.writes == [] and not real_ledger.exists()
+    code, out = run(["doctor"], {}, fake, capsys)
+    assert code == 1 and "BITRIX_WEBHOOK_URL" in out.out
+
+
+def test_without_an_explicit_environment_the_dotenv_of_the_working_folder_is_used(tmp_path, monkeypatch, capsys):
+    (tmp_path / ".env").write_text(f"BITRIX_WEBHOOK_URL={WEBHOOK}\nLEDGER_PATH={tmp_path / 'l.sqlite3'}\n", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    for name in ("BITRIX_WEBHOOK_URL", "LEDGER_PATH", "OL_DIALOG_IDS"):
+        monkeypatch.delenv(name, raising=False)
+    code = main(["discover"], client_factory=lambda settings: FakeBitrix())  # environ=None: ambiente real do processo + .env
+    assert code == 0 and "DT1146_101:NEW" in capsys.readouterr().out
+
+
 # ---------------------------------------------------------------- poll
 
 def test_poll_once_processes_new_messages_and_requires_a_dialog(pdf_file, env, sample_pdf_bytes, capsys):
@@ -246,6 +269,20 @@ def test_poll_once_processes_new_messages_and_requires_a_dialog(pdf_file, env, s
     assert code == 0 and "ok" in out.out and len(fake.contacts) == 1 and "MARCOS" not in out.out
     code, out = run(["poll", "--once"], {k: v for k, v in env.items() if k != "OL_DIALOG_IDS"}, fake, capsys)
     assert code == 2 and "OL_DIALOG_IDS" in out.err
+
+
+def test_poll_init_only_marks_the_starting_point_and_never_processes_even_when_a_cursor_exists(env, sample_pdf_bytes, capsys):
+    fake = FakeBitrix()
+    env = {**env, "OL_DIALOG_IDS": "chat360293"}
+    old = datetime.now(timezone.utc) - timedelta(hours=2)
+    first = fake.add_message("chat360293", text="início", at=old)
+    code, out = run(["poll", "--init-only"], env, fake, capsys)
+    assert code == 0 and "marcado" in out.out and f"#{first}" in out.out and fake.contacts == {}
+    fake.add_message("chat360293", files=(("CPF12345678909.pdf", sample_pdf_bytes),), at=old + timedelta(minutes=30))
+    code, out = run(["poll", "--init-only"], env, fake, capsys)  # já existe cursor: NÃO processa o PDF novo
+    assert code == 0 and "já" in out.out and fake.contacts == {} and fake.writes == []
+    assert run(["poll", "--init-only", "--dry-run"], env, fake, capsys)[0] == 2  # combinação sem sentido: recusada
+    assert run(["poll", "--init-only"], {k: v for k, v in env.items() if k != "OL_DIALOG_IDS"}, fake, capsys)[0] == 2
 
 
 def test_poll_quiet_prints_nothing_when_there_is_nothing_new_and_reports_when_there_is(pdf_file, env, sample_pdf_bytes, capsys):

@@ -20,7 +20,7 @@ from . import __version__
 from .api import create_app
 from .bitrix.client import BitrixClient, BitrixError
 from .bitrix.fieldmap import FieldMap, FieldMapError, load_field_map
-from .bitrix.openlines import make_poller, poll_once
+from .bitrix.openlines import init_cursors, make_poller, poll_once
 from .config import ConfigError, Settings, load_settings
 from .doctor import render_text, run_doctor
 from .hermes_install import (
@@ -165,9 +165,17 @@ def _hermes_install(args: argparse.Namespace) -> int:
     return 0
 
 
+def _env_file(args: argparse.Namespace, environ: Mapping[str, str] | None) -> str | None:
+    """Arquivo de configuração: `--env-file`, ou o `.env` da pasta atual SÓ quando vale o ambiente real do processo.
+    Um `environ` explícito (testes, quem embute o app) é hermético: nunca lê um `.env` por perto. Foi assim que uma
+    instalação com `.env` de verdade fez a suíte de testes gravar no ledger real."""
+    if args.env_file:
+        return args.env_file
+    return ".env" if environ is None and Path(".env").exists() else None
+
+
 def _doctor(args: argparse.Namespace, environ: Mapping[str, str] | None, factory: ClientFactory | None) -> int:
-    env_file = args.env_file or (".env" if Path(".env").exists() else None)
-    report = run_doctor(environ=environ, env_file=env_file, client_factory=factory, offline=args.offline)
+    report = run_doctor(environ=environ, env_file=_env_file(args, environ), client_factory=factory, offline=args.offline)
     print(json.dumps(report.to_dict(), ensure_ascii=False, indent=2) if args.json else render_text(report))
     return 0 if report.ok else 1
 
@@ -211,6 +219,19 @@ def _poll(settings: Settings, args: argparse.Namespace, factory: ClientFactory |
     if not dialogs:
         print("erro: nenhum diálogo configurado; defina OL_DIALOG_IDS ou use --dialog", file=sys.stderr)
         return 2
+    if args.init_only:
+        if args.dry_run or args.backfill:
+            print("erro: --init-only não combina com --dry-run nem com --backfill", file=sys.stderr)
+            return 2
+        runtime = build_runtime(settings, factory)
+        for dialog, state, cursor in init_cursors(runtime.client, runtime.ledger, dialogs):
+            if state == "initialized":
+                print(f"poll: ponto de partida de {dialog} marcado na mensagem #{cursor} (nada foi processado)")
+            elif state == "existing":
+                print(f"poll: {dialog} já tinha ponto de partida (#{cursor}); nada foi alterado nem processado")
+            else:
+                print(f"poll: {dialog} não tem mensagens; o ponto de partida será marcado na primeira rodada")
+        return 0
     runtime = build_runtime(settings, factory)
 
     def cycle() -> int:
@@ -311,6 +332,8 @@ def _parser() -> argparse.ArgumentParser:
     poll.add_argument("--once", action="store_true", help="uma rodada e sai")
     poll.add_argument("--dry-run", action="store_true")
     poll.add_argument("--quiet", action="store_true", help="não imprime nada quando não há arquivo novo (para cron)")
+    poll.add_argument("--init-only", action="store_true",
+                      help="só marca o ponto de partida de cada diálogo: não processa nada e nunca move um cursor existente")
     poll.add_argument("--backfill", type=int, default=0, help="na 1ª execução, processa as últimas N mensagens")
     poll.add_argument("--dialog", action="append", help="ID do diálogo (repita); padrão: OL_DIALOG_IDS")
     poll.add_argument("--interval", type=int, help="segundos entre rodadas (padrão: POLL_INTERVAL_SEC)")
@@ -336,8 +359,7 @@ def main(argv: Sequence[str] | None = None, *, client_factory: ClientFactory | N
     if args.command == "doctor":
         return _doctor(args, environ, client_factory)
     try:
-        env_file = args.env_file or (".env" if Path(".env").exists() else None)
-        settings = load_settings(environ, env_file=env_file)
+        settings = load_settings(environ, env_file=_env_file(args, environ))
     except ConfigError as exc:
         print(f"erro de configuração: {exc}", file=sys.stderr)
         return 2

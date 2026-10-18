@@ -17,6 +17,9 @@ mesmas garantias: idempotente, nunca apaga nada, e nenhuma saída traz dado pess
 `<HERMES_HOME>` é `HERMES_HOME` se definida; senão `%LOCALAPPDATA%\hermes` (Windows nativo) ou `~/.hermes`. Use
 `--hermes-home` para outro lugar e `--force` para regravar.
 
+Antes de agendar, marque o ponto de partida do grupo com `python run.py poll --init-only`: só cria o cursor que falta (nunca
+move um existente, nunca processa nem baixa nada). Assim o cron só enxerga laudos que chegarem DEPOIS desse momento.
+
 Depois, agende (o comando aparece na saída do `hermes-install`):
 
 ```bash

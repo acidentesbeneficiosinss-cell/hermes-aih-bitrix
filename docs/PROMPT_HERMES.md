@@ -115,6 +115,8 @@ Informe as versões instaladas. Este é o único download (PyPI, uns 25 MB).
 ```
 Esperado: pytest sem nenhuma falha (informe o total); `doctor --offline` = 3 PASS e 2 SKIP; os dois `extract` terminam com
 `"rotulos_nao_reconhecidos": []`. As amostras são de um paciente INVENTADO: o `ingest` sem `--dry-run` as recusa.
+Rode o pytest AGORA, antes do `.env` (passo 5). Depois que o `.env` com o webhook existir, não rode a suíte de novo nesta pasta:
+versões antigas dela (anteriores ao commit que isola o `.env`) usavam o ledger real e gravavam um registro de teste nele.
 
 ### Passo 5: configuração (.env). O segredo é meu, não seu
 ```powershell
@@ -170,12 +172,13 @@ apagar à mão. O portal tem automações (o card novo gira o rodízio de etapas
 Grava `SKILL.md` e `aih_poll.py` no HERMES_HOME (se o Hermes não estiver em `%LOCALAPPDATA%\hermes`, acrescente
 `--hermes-home <pasta>`). Anote os dois caminhos impressos.
 
-Marque o ponto de partida do grupo (NÃO processa o histórico; grava só no ledger local). Rode APENAS se `$dest\data\ledger.sqlite3`
-ainda não existir (1ª instalação); se existir, não rode e me pergunte:
+Marque o ponto de partida do grupo. O `--init-only` só grava um cursor no ledger local: nunca processa nada, nunca baixa
+anexo, nunca grava no Bitrix e nunca move um cursor que já exista, então é seguro em qualquer situação:
 ```powershell
-if (-not (Test-Path "$dest\data\ledger.sqlite3")) { & $py run.py poll --once }
+& $py run.py poll --init-only
 ```
-Esperado: `poll: 0 arquivo(s) analisado(s)`.
+Esperado: `poll: ponto de partida de chat360293 marcado na mensagem #<id> (nada foi processado)` (ou "já tinha ponto de partida",
+numa reinstalação). Nunca use `poll --once` só para "inicializar": se já houver cursor, ele processa laudos de verdade.
 
 Agende o poller (sem agente: zero tokens, e dado de paciente nunca passa pelo modelo):
 ```powershell
@@ -229,6 +232,10 @@ ativo + skill instalada + relatório entregue. Qualquer coisa fora disso é pend
 - `[FAIL] Portal: campos da SPA`: alguém mudou ou removeu um campo no Bitrix; relate a mensagem completa (ela lista as chaves).
 - `[FAIL] Portal: diálogo chat…`: sem acesso ao grupo, ou ID errado.
 - Qualquer `needs_review`: o app NÃO sobrescreveu nada; relate o ID do contato/card impresso. Nunca tente "forçar" nem apagar.
+- Ledger com registro de teste (por exemplo, `ingest --dry-run` da amostra respondendo `duplicate`, com contato 70001 e card 3001):
+  veio de uma versão antiga da suíte rodada com o `.env` presente. Antes de qualquer `poll` real, peça minha autorização, apague o
+  arquivo `data/ledger.sqlite3` INTEIRO (e `-wal`/`-shm`, se existirem; não só a linha, pois pode haver cursor falso) numa
+  instalação que ainda não processou nada de verdade, e rode `poll --init-only`.
 ````
 
 ## Se o Hermes roda em Linux/Docker (por exemplo, falando com você pelo Telegram)

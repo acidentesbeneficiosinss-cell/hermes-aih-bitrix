@@ -148,6 +148,26 @@ def backfill_cursor(client: Any, dialog_id: str, count: int) -> int:
     return (min(newest) - 1) if newest else 0
 
 
+def init_cursors(client: Any, ledger: Ledger, dialog_ids: Sequence[str]) -> list[tuple[str, str, int]]:
+    """Marca o ponto de partida de cada diálogo SEM processar nem baixar nada. Só cria o cursor que ainda não existe:
+    um cursor existente nunca é movido (para trás reprocessaria histórico; para frente perderia laudos).
+
+    Devolve (diálogo, "initialized" | "existing" | "empty", id da mensagem)."""
+    out: list[tuple[str, str, int]] = []
+    for dialog in dialog_ids:
+        current = ledger.get_cursor(dialog)
+        if current:
+            out.append((dialog, "existing", current))
+            continue
+        latest = latest_message_id(client, dialog)
+        if latest:
+            ledger.set_cursor(dialog, latest)
+            out.append((dialog, "initialized", latest))
+        else:
+            out.append((dialog, "empty", 0))
+    return out
+
+
 def _process_attachment(
     client: Any, pipeline: Pipeline, attachment: Attachment, dialog: str, dry_run: bool, max_pdf_bytes: int
 ) -> IngestResult:

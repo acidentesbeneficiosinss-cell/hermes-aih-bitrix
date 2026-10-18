@@ -74,8 +74,8 @@ def test_the_skill_has_hermes_frontmatter_and_the_rules_an_agent_must_follow(her
     assert text.startswith("---\nname: aih-bitrix\ndescription: ")
     head = text.split("---")[1]
     assert head.count("\ndescription:") == 1 and all(len(line) < 400 for line in head.splitlines())
-    for must_say in ("extract --show", "selfcheck", "--dry-run", "doctor", "nunca apaga", "poll --once", "LGPD",
-                     "needs_review", "AMOSTRA-FICTICIA"):
+    for must_say in ("extract --show", "selfcheck", "--dry-run", "doctor", "nunca apaga", "poll --once", "poll --init-only",
+                     "LGPD", "needs_review", "AMOSTRA-FICTICIA"):
         assert must_say in text, must_say
 
 

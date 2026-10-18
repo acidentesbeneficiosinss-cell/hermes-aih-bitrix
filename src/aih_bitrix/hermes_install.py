@@ -128,7 +128,8 @@ Comandos: `doctor`, `ingest`, `poll`, `discover`, `extract`, `sample`, `selfchec
 Um cron **sem agente** (`aih-bitrix-poller`, script `aih_poll.py` em `scripts/` do Hermes) roda `poll --once --quiet` e só
 fala quando processa algo ou falha. Para forçar uma rodada: `run.py poll --once`; para ver sem gravar:
 `run.py poll --once --dry-run`. O poller só processa lotes **fechados** (arquivos, mensagem `cpf …`, separador) e começa a
-partir do momento em que foi inicializado, sem importar o histórico do grupo.
+partir do momento em que foi inicializado, sem importar o histórico do grupo. Para marcar esse ponto de partida SEM processar
+nada (e sem nunca mover um já existente), use `run.py poll --init-only`; nunca rode `poll --once` só para "inicializar".
 
 ## Diagnóstico
 

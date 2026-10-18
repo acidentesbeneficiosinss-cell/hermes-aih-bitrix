@@ -64,6 +64,7 @@ python run.py extract laudo.pdf                # lê o PDF localmente; não impr
 python run.py ingest --dry-run laudo.pdf       # mostra o que faria, sem gravar
 python run.py ingest CPF12345678909.pdf        # processa (CPF vem do nome do arquivo ou de --cpf)
 python run.py poll --once --dry-run --backfill 100 --dialog chat360293   # lê o grupo sem gravar
+python run.py poll --init-only                 # marca o ponto de partida do grupo; não processa nada, nunca move cursor existente
 python run.py poll --once --quiet              # uma rodada; imprime só se houver novidade (cron)
 python run.py poll                             # laço contínuo (OL_DIALOG_IDS)
 python run.py serve --with-poller              # API HTTP (+ poller em segundo plano)
@@ -97,6 +98,7 @@ Webhook **não** registra eventos (`event.*` só com app OAuth), então a captur
 portal, sem seguir redirecionamentos, limite de tamanho). Regras:
 
 * **1ª execução** só marca o ponto de partida (não importa o histórico); `--backfill N` processa as últimas N mensagens.
+  `poll --init-only` faz só isso, em qualquer momento: cria o cursor que falta e **nunca** move um existente nem processa nada.
 * O padrão do grupo é *arquivos → mensagem `cpf NNN.NNN.NNN-NN` → separador `-----` → resposta do bot*; só **lotes
   fechados** (separador, resposta de bot, intervalo > 5 min ou chat quieto por 60 s) são processados, assim o CPF que chega
   depois dos arquivos não se perde. O CPF do **nome do arquivo** vale mais que o da mensagem.
@@ -163,7 +165,7 @@ contato **#71886** + card **#2876** (teste manual com os dados do PDF modelo) ·
 ## Testes
 
 ```bash
-.venv\Scripts\python.exe -m pytest        # 265 testes; usam um FakeBitrix fiel ao que foi medido no portal (sem rede)
+.venv\Scripts\python.exe -m pytest        # 270 testes; usam um FakeBitrix fiel ao que foi medido no portal (sem rede)
 ```
 
 Os PDFs de teste são **gerados em memória** (`aih_bitrix.synthetic`) com pacientes inventados: o repositório não contém

@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from aih_bitrix.bitrix.client import BitrixError
-from aih_bitrix.bitrix.openlines import Attachment, group_batches, poll_once
+from aih_bitrix.bitrix.openlines import Attachment, group_batches, init_cursors, poll_once
 from aih_bitrix.config import Settings
 from aih_bitrix.ledger import Ledger
 from aih_bitrix.pipeline import Pipeline
@@ -93,6 +93,24 @@ def test_first_run_only_initialises_the_cursor_without_importing_the_history(env
     fake, ledger, _ = env
     last = fake.add_message(DIALOG, files=(("CPF12345678909.pdf", sample_pdf_bytes),), at=T0)
     assert poll(env) == [] and ledger.get_cursor(DIALOG) == last and fake.writes == []
+
+
+def test_init_cursors_marks_the_starting_point_without_processing_or_downloading_anything(env, sample_pdf_bytes):
+    fake, ledger, _ = env
+    fake.add_message(DIALOG, text="início", at=T0)
+    last = fake.add_message(DIALOG, files=(("CPF12345678909.pdf", sample_pdf_bytes),), at=T0 + timedelta(minutes=5))
+    assert init_cursors(fake, ledger, [DIALOG]) == [(DIALOG, "initialized", last)]
+    assert ledger.get_cursor(DIALOG) == last
+    assert fake.writes == [] and fake.contacts == {} and not any(m == "disk.file.get" for m, _ in fake.calls)
+
+
+def test_init_cursors_never_moves_an_existing_cursor_and_reports_an_empty_dialog(env):
+    fake, ledger, _ = env
+    first = fake.add_message(DIALOG, text="início", at=T0)
+    init_cursors(fake, ledger, [DIALOG])
+    fake.add_message(DIALOG, text="mais uma", at=T0 + timedelta(minutes=1))
+    assert init_cursors(fake, ledger, [DIALOG]) == [(DIALOG, "existing", first)] and ledger.get_cursor(DIALOG) == first
+    assert init_cursors(fake, ledger, ["chat999"]) == [("chat999", "empty", 0)] and ledger.get_cursor("chat999") == 0
 
 
 def test_backfill_processes_only_the_last_messages(env, sample_pdf_bytes):
