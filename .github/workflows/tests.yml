@@ -30,7 +30,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements-dev.txt
-      - name: Testes (inclui o guarda de privacidade: nenhum dado real no repositório)
+      - name: "Testes (inclui o guarda de privacidade: nenhum dado real no repositório)"
         run: python -m pytest
       - name: Diagnóstico offline da instalação
         run: python run.py doctor --offline
