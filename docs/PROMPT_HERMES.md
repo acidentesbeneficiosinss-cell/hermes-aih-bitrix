@@ -56,8 +56,10 @@ NUNCA apaga nada. Códigos de saída: 0 ok · 1 pendência (needs_review/error/n
 
 ## PASSOS
 
-Observação: as variáveis do PowerShell podem não persistir entre comandos; se não persistirem, escreva os caminhos por
-extenso. Em Linux/WSL troque `.\.venv\Scripts\python.exe` por `.venv/bin/python` (e confirme comigo antes).
+Os comandos abaixo são PowerShell (Windows). Se o seu terminal for outro shell, rode-os com `powershell -NoProfile -Command "..."`.
+As variáveis do PowerShell podem não persistir entre comandos; se não persistirem, escreva os caminhos por extenso. Se o
+launcher `py` não existir, use `python`. Em Linux/WSL troque `.\.venv\Scripts\python.exe` por `.venv/bin/python` (e confirme
+comigo antes).
 
 ### Passo 1: reconhecer o ambiente (somente leitura)
 ```powershell
@@ -169,8 +171,10 @@ hermes cron create "every 5m" --no-agent --script aih_poll.py --name aih-bitrix-
 hermes cron list
 hermes cron status
 ```
-(`--deliver` aceita origin, local, telegram, discord, signal ou plataforma:chat_id; "local" só grava a saída em arquivo.) O cron é
-disparado pelo gateway do Hermes: `hermes cron status` precisa mostrar o scheduler rodando. Se não estiver, me avise; iniciar ou instalar o
+(`--deliver` aceita origin, local, telegram, discord, signal ou plataforma:chat_id; "local" só grava a saída em arquivo. Se o
+`hermes cron create` não estiver disponível no seu terminal, use a ferramenta `cronjob` com `action="create"`,
+`schedule="every 5m"`, `script="aih_poll.py"`, `no_agent=True`, `name="aih-bitrix-poller"` e `deliver="<ENTREGA_DO_CRON>"`.)
+O cron é disparado pelo gateway do Hermes: `hermes cron status` precisa mostrar o scheduler rodando. Se não estiver, me avise; iniciar ou instalar o
 gateway (`hermes gateway install` ou `hermes gateway`) muda o Hermes, então só com AUTORIZO_EDITAR_CONFIG_DO_HERMES = sim.
 Cada laudo leva uns 15 s (espera de conferência), e o limite padrão de scripts do cron é 120 s. Se AUTORIZO_EDITAR_CONFIG_DO_HERMES
 = sim, faça backup do `config.yaml` e defina `cron.script_timeout_seconds: 600`; se não, apenas me avise desse limite.
@@ -193,7 +197,8 @@ Entregue uma tabela com: Item | Resultado (PASS, FAIL ou NÃO FEITO) | Evidênci
 13. hermes-install (2 arquivos)  14. cron (nome, agenda, entrega, estado do gateway, última execução)  15. skill carregada.
 Termine com "Pendências e riscos" (o que não foi verificado e por quê) e "Decisões que preciso de você" (por exemplo: liberar o
 `selfcheck`; trocar para um webhook dedicado e revogar o de permissão total; autorizar o `ingest` real para laudos recebidos
-no chat).
+no chat). Lembre-me de que a primeira gravação REAL do poller acontece quando chegar o primeiro laudo novo no grupo: quando
+o cron avisar, indique-me os IDs do contato e do card para eu abrir no Bitrix e conferir antes de confiar no automático.
 
 ## DEFINIÇÃO DE PRONTO
 Pronto = pytest verde + doctor sem [FAIL] + extract das duas amostras sem rótulos não reconhecidos + cron criado com o gateway
