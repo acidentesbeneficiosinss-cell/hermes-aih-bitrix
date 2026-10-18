@@ -161,14 +161,14 @@ contato **#71886** + card **#2876** (teste manual com os dados do PDF modelo) ·
 ## Testes
 
 ```bash
-.venv\Scripts\python.exe -m pytest        # 260 testes; usam um FakeBitrix fiel ao que foi medido no portal (sem rede)
+.venv\Scripts\python.exe -m pytest        # 265 testes; usam um FakeBitrix fiel ao que foi medido no portal (sem rede)
 ```
 
 Os PDFs de teste são **gerados em memória** (`aih_bitrix.synthetic`) com pacientes inventados: o repositório não contém
 nenhum PDF nem dado de paciente. O teste `tests/test_repo_hygiene.py` varre tudo o que seria publicado e **falha** se achar
 PDF, CPF válido fora dos exemplos conhecidos, número com cara de CNS ou token de webhook. A CI
-(`.github/workflows/tests.yml`) está configurada para rodar a suíte em Windows e Linux, Python 3.10 a 3.14 (ainda não
-executada: depende de o repositório ir para o GitHub).
+(`.github/workflows/tests.yml`) roda a suíte a cada push em Windows e Linux, Python 3.10 a 3.14 (os resultados ficam na aba
+Actions do repositório).
 
 Estrutura: `src/aih_bitrix/` (`parser`, `infer`, `pipeline`, `api`, `cli`, `doctor`, `selfcheck`, `synthetic`, `hermes_install`,
 `bitrix/{client,fieldmap,contacts,items,verify,openlines}`), `tests/`, `docs/` (integração com o Hermes em `docs/HERMES.md`,
