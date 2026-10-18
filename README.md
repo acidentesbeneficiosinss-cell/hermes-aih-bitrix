@@ -18,6 +18,8 @@ PDF ─► texto + geometria ─► parser (rótulo→valor) ─► inferências
 ## Instalação
 
 ```bash
+git clone https://github.com/acidentesbeneficiosinss-cell/hermes-aih-bitrix.git   # repositório privado
+cd hermes-aih-bitrix
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt        # Windows  (Linux/macOS: .venv/bin/python)
 copy .env.example .env                                              # preencha só a linha BITRIX_WEBHOOK_URL

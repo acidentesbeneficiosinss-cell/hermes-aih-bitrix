@@ -3,7 +3,7 @@
 **Como usar**
 
 1. Preencha o bloco `DADOS` no começo do prompt. O que ficar entre `< >` o Hermes pergunta a você, uma única vez, antes
-   de começar. Se o código ainda não estiver no GitHub, use o caminho da pasta local em `ORIGEM_DO_CODIGO`.
+   de começar. `ORIGEM_DO_CODIGO` já vem preenchido com o repositório privado no GitHub.
 2. Cole **todo** o conteúdo do bloco abaixo (de `# TAREFA` até o fim) no Hermes.
 3. Responda às perguntas dele. O webhook do Bitrix24 **você** coloca no arquivo `.env` (passo 5); ele nunca vai para o chat.
 4. Ao final o Hermes entrega um relatório com evidências (sem dado de paciente). Envie esse relatório para revisão.
@@ -20,7 +20,8 @@ app já não contém dado pessoal) e aguarde minha orientação. Não improvise 
 "ajuste" testes para passar.
 
 ## DADOS (eu preencho; o que estiver entre < > você me pergunta, uma única vez, antes de começar)
-- ORIGEM_DO_CODIGO: <URL do repositório no GitHub | pasta local | arquivo .zip>
+- ORIGEM_DO_CODIGO: https://github.com/acidentesbeneficiosinss-cell/hermes-aih-bitrix   (repositório PRIVADO da conta GitHub
+  acidentesbeneficiosinss-cell; só use pasta local ou .zip se eu mandar)
 - PASTA_DE_INSTALACAO: %USERPROFILE%\hermes-apps\hermes-aih-bitrix
 - DIALOGOS_A_MONITORAR: chat360293   (grupo de WhatsApp "Docs protocolo", Canal Aberto 24Zap)
 - ENTREGA_DO_CRON: <para onde vão os avisos do poller: origin | local | telegram | discord | signal | plataforma:chat_id>
@@ -55,8 +56,10 @@ NUNCA apaga nada. Códigos de saída: 0 ok · 1 pendência (needs_review/error/n
    poller só marca o ponto de partida do grupo (não grava no Bitrix).
 5. Instale somente o que está em `requirements-dev.txt`. Não execute scripts baixados, não use `curl | sh`, não envie
    código, logs ou saídas a serviços externos.
-6. Só altere o `config.yaml` do Hermes se AUTORIZO_EDITAR_CONFIG_DO_HERMES for "sim" (faça backup antes).
-7. Na sua memória grave apenas: o caminho do app, o nome da skill (aih-bitrix) e o nome do cron (aih-bitrix-poller).
+6. Repositório: apenas leitura. Faça `git clone` e, se eu pedir, `git pull`; nunca `git push`, nunca crie branches, tags,
+   issues ou qualquer coisa no GitHub, e não altere o código do app.
+7. Só altere o `config.yaml` do Hermes se AUTORIZO_EDITAR_CONFIG_DO_HERMES for "sim" (faça backup antes).
+8. Na sua memória grave apenas: o caminho do app, o nome da skill (aih-bitrix) e o nome do cron (aih-bitrix-poller).
 
 ## PASSOS
 
@@ -80,12 +83,16 @@ Hermes NÃO estiver neste Windows (WSL, Docker, servidor), pare e me pergunte.
 ```powershell
 $dest = [Environment]::ExpandEnvironmentVariables("<PASTA_DE_INSTALACAO>"); $py = "$dest\.venv\Scripts\python.exe"
 ```
-(a) GitHub: `git clone "<ORIGEM_DO_CODIGO>" $dest`. Se pedir login (repositório privado), me peça para autenticar
-(`gh auth login` ou o Gerenciador de Credenciais do Git). Nunca peça token no chat.
-(b) Pasta local: `robocopy "<ORIGEM_DO_CODIGO>" $dest /E /XD .venv .git data __pycache__ .pytest_cache /XF .env *.env.txt *.pdf`
+(a) GitHub (padrão): `git clone "https://github.com/acidentesbeneficiosinss-cell/hermes-aih-bitrix.git" $dest`.
+O repositório é PRIVADO e pertence à conta acidentesbeneficiosinss-cell; nesta máquina o Git (Gerenciador de Credenciais) e o
+`gh` já estão autenticados nela. Se o clone falhar com "Authentication failed" ou "Repository not found", rode
+`gh auth status` (somente leitura), me diga qual conta está ativa e peça-me para rodar `gh auth login -h github.com` com a conta
+acidentesbeneficiosinss-cell. Nunca peça token no chat. O destino `$dest` não pode existir ou precisa estar vazio.
+(b) Pasta local, só se eu mandar: `robocopy "<pasta local>" $dest /E /XD .venv .git data __pycache__ .pytest_cache /XF .env *.env.txt *.pdf`
 (robocopy: códigos de saída 0 a 7 significam sucesso).
-(c) .zip: `Expand-Archive -LiteralPath "<arquivo.zip>" -DestinationPath $dest`.
-Confirme `Test-Path "$dest\run.py"`. Nunca copie `.env`, `*.env.txt`, `.venv`, `data` nem PDFs de pacientes.
+(c) .zip, só se eu mandar: `Expand-Archive -LiteralPath "<arquivo.zip>" -DestinationPath $dest`.
+Confirme `Test-Path "$dest\run.py"` e anote `git -C $dest rev-parse --short HEAD`. Nunca copie `.env`, `*.env.txt`, `.venv`, `data` nem
+PDFs de pacientes.
 
 ### Passo 3: ambiente virtual e dependências
 ```powershell
