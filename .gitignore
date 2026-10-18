@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+# segredos e dados locais: nunca versionar
+.env
+*.env.txt
+data/
+# PDFs (laudos reais ou as amostras geradas por `sample`) nunca vão para o repositório
+*.pdf

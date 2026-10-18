@@ -1,0 +1,1056 @@
+{
+ "_comment": "Metadados (somente esquema) do portal brandaocorrea.bitrix24.com.br em 2026-10-18; sem dados de pessoas.",
+ "contact_fields": {
+  "NAME": {
+   "type": "string",
+   "isRequired": true,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Primeiro Nome"
+  },
+  "LAST_NAME": {
+   "type": "string",
+   "isRequired": true,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Sobrenome"
+  },
+  "SECOND_NAME": {
+   "type": "string",
+   "isRequired": true,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Segundo nome"
+  },
+  "BIRTHDATE": {
+   "type": "date",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Data de nascimento"
+  },
+  "PHONE": {
+   "type": "crm_multifield",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": true,
+   "isDynamic": false,
+   "title": "Telefone"
+  },
+  "EMAIL": {
+   "type": "crm_multifield",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": true,
+   "isDynamic": false,
+   "title": "E-mail"
+  },
+  "COMMENTS": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Observação"
+  },
+  "OPENED": {
+   "type": "char",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Disponível para todos"
+  },
+  "ASSIGNED_BY_ID": {
+   "type": "user",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Pessoa responsável"
+  },
+  "UF_CRM_1729515037979": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "UF_CRM_1729515037979",
+   "listLabel": "Nome da Mãe",
+   "formLabel": "Nome da Mãe",
+   "filterLabel": "Nome da Mãe",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   }
+  },
+  "UF_CRM_1753903279519": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "UF_CRM_1753903279519",
+   "listLabel": "Cidade - Texto - ",
+   "formLabel": "Cidade - Texto - ",
+   "filterLabel": "Cidade - Texto - ",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   }
+  },
+  "UF_CRM_1727815619072": {
+   "type": "enumeration",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "items": [
+    {
+     "ID": "377",
+     "VALUE": "MT"
+    },
+    {
+     "ID": "5529",
+     "VALUE": "MS"
+    },
+    {
+     "ID": "5531",
+     "VALUE": "PE"
+    },
+    {
+     "ID": "5533",
+     "VALUE": "RN"
+    },
+    {
+     "ID": "5535",
+     "VALUE": "AC"
+    },
+    {
+     "ID": "5537",
+     "VALUE": "AL"
+    },
+    {
+     "ID": "5539",
+     "VALUE": "AP"
+    },
+    {
+     "ID": "5541",
+     "VALUE": "AM"
+    },
+    {
+     "ID": "5543",
+     "VALUE": "BA"
+    },
+    {
+     "ID": "5545",
+     "VALUE": "CE"
+    },
+    {
+     "ID": "5547",
+     "VALUE": "DF"
+    },
+    {
+     "ID": "5549",
+     "VALUE": "ES"
+    },
+    {
+     "ID": "5551",
+     "VALUE": "GO"
+    },
+    {
+     "ID": "5553",
+     "VALUE": "MA"
+    },
+    {
+     "ID": "5555",
+     "VALUE": "MG"
+    },
+    {
+     "ID": "5557",
+     "VALUE": "PA"
+    },
+    {
+     "ID": "5559",
+     "VALUE": "PB"
+    },
+    {
+     "ID": "5561",
+     "VALUE": "PR"
+    },
+    {
+     "ID": "5563",
+     "VALUE": "PI"
+    },
+    {
+     "ID": "5565",
+     "VALUE": "RJ"
+    },
+    {
+     "ID": "5567",
+     "VALUE": "RS"
+    },
+    {
+     "ID": "5569",
+     "VALUE": "RO"
+    },
+    {
+     "ID": "5571",
+     "VALUE": "SC"
+    },
+    {
+     "ID": "5573",
+     "VALUE": "SP"
+    },
+    {
+     "ID": "5575",
+     "VALUE": "SE"
+    },
+    {
+     "ID": "5577",
+     "VALUE": "TO"
+    },
+    {
+     "ID": "5963",
+     "VALUE": "RR"
+    }
+   ],
+   "title": "UF_CRM_1727815619072",
+   "listLabel": "Estado",
+   "formLabel": "Estado",
+   "filterLabel": "Estado",
+   "settings": {
+    "DISPLAY": "UI",
+    "LIST_HEIGHT": 1,
+    "CAPTION_NO_VALUE": "",
+    "SHOW_NO_VALUE": "Y"
+   }
+  },
+  "UF_CRM_1725391645": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "UF_CRM_1725391645",
+   "listLabel": "CEP*",
+   "formLabel": "CEP*",
+   "filterLabel": "CEP*",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   }
+  },
+  "UF_CRM_1524762221558": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "UF_CRM_1524762221558",
+   "listLabel": "CPF",
+   "formLabel": "CPF",
+   "filterLabel": "CPF",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   }
+  }
+ },
+ "item_fields": {
+  "id": {
+   "type": "integer",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "ID",
+   "upperName": "ID"
+  },
+  "title": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Nome",
+   "upperName": "TITLE"
+  },
+  "xmlId": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "ID externo",
+   "upperName": "XML_ID"
+  },
+  "createdTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Criado em",
+   "upperName": "CREATED_TIME"
+  },
+  "updatedTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Atualizado em",
+   "upperName": "UPDATED_TIME"
+  },
+  "createdBy": {
+   "type": "user",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Criado por",
+   "upperName": "CREATED_BY"
+  },
+  "updatedBy": {
+   "type": "user",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Atualizado por",
+   "upperName": "UPDATED_BY"
+  },
+  "assignedById": {
+   "type": "user",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Pessoa responsável",
+   "upperName": "ASSIGNED_BY_ID"
+  },
+  "opened": {
+   "type": "boolean",
+   "isRequired": true,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Disponível para todos",
+   "upperName": "OPENED"
+  },
+  "webformId": {
+   "type": "crm_webform",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Criada pelo formulário de CRM",
+   "upperName": "WEBFORM_ID"
+  },
+  "lastCommunicationTime": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Último contato",
+   "upperName": "LAST_COMMUNICATION_TIME"
+  },
+  "companyId": {
+   "type": "crm_company",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Empresa",
+   "settings": {
+    "parentEntityTypeId": 4
+   },
+   "upperName": "COMPANY_ID"
+  },
+  "contactId": {
+   "type": "crm_contact",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "isDeprecated": true,
+   "title": "Contato",
+   "upperName": "CONTACT_ID"
+  },
+  "contactIds": {
+   "type": "crm_contact",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": true,
+   "isDynamic": false,
+   "title": "Contatos",
+   "upperName": "CONTACT_IDS"
+  },
+  "contacts": {
+   "type": "crm_contact",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": true,
+   "isDynamic": false,
+   "title": "Contatos",
+   "upperName": "CONTACTS"
+  },
+  "categoryId": {
+   "type": "crm_category",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Pipeline",
+   "upperName": "CATEGORY_ID"
+  },
+  "movedTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Data da mudança de etapa",
+   "upperName": "MOVED_TIME"
+  },
+  "movedBy": {
+   "type": "user",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Etapa alterada por",
+   "upperName": "MOVED_BY"
+  },
+  "stageId": {
+   "type": "crm_status",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "statusType": "DYNAMIC_1146_STAGE_101",
+   "title": "Etapa",
+   "upperName": "STAGE_ID"
+  },
+  "previousStageId": {
+   "type": "crm_status",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "statusType": "DYNAMIC_1146_STAGE_101",
+   "title": "Etapa anterior",
+   "upperName": "PREVIOUS_STAGE_ID"
+  },
+  "lastActivityBy": {
+   "type": "user",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Última atividade da linha do tempo adicionada por",
+   "upperName": "LAST_ACTIVITY_BY"
+  },
+  "lastActivityTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Última atualização em",
+   "upperName": "LAST_ACTIVITY_TIME"
+  },
+  "lastCommunicationCallTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Última chamada",
+   "upperName": "LAST_COMMUNICATION_CALL_TIME"
+  },
+  "lastCommunicationEmailTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Último e-mail",
+   "upperName": "LAST_COMMUNICATION_EMAIL_TIME"
+  },
+  "lastCommunicationImolTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Última conversa no Canal Aberto",
+   "upperName": "LAST_COMMUNICATION_IMOL_TIME"
+  },
+  "lastCommunicationWebformTime": {
+   "type": "datetime",
+   "isRequired": false,
+   "isReadOnly": true,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": false,
+   "title": "Último formulário CRM enviado",
+   "upperName": "LAST_COMMUNICATION_WEBFORM_TIME"
+  },
+  "ufCrm53_1775649818798": {
+   "type": "enumeration",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "items": [
+    {
+     "ID": "20713",
+     "VALUE": "Menos de 1 ano"
+    },
+    {
+     "ID": "20715",
+     "VALUE": "Entre 1 e 3 anos"
+    },
+    {
+     "ID": "20717",
+     "VALUE": "Entre 3 e 5 anos"
+    },
+    {
+     "ID": "20719",
+     "VALUE": "Entre 5 e 10 anos"
+    }
+   ],
+   "title": "Quando ocorreu o acidente?",
+   "listLabel": "Quando ocorreu o acidente?",
+   "formLabel": "Quando ocorreu o acidente?",
+   "filterLabel": "Quando ocorreu o acidente?",
+   "settings": {
+    "DISPLAY": "UI",
+    "LIST_HEIGHT": 1,
+    "CAPTION_NO_VALUE": "",
+    "SHOW_NO_VALUE": "Y"
+   },
+   "upperName": "UF_CRM_53_1775649818798"
+  },
+  "ufCrm53_1775649865946": {
+   "type": "enumeration",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "items": [
+    {
+     "ID": "20721",
+     "VALUE": "Sim"
+    },
+    {
+     "ID": "20723",
+     "VALUE": "Não"
+    },
+    {
+     "ID": "20725",
+     "VALUE": "Mais de uma Cirurgia"
+    }
+   ],
+   "title": "Houve Cirurgia ?",
+   "listLabel": "Houve Cirurgia ?",
+   "formLabel": "Houve Cirurgia ?",
+   "filterLabel": "Houve Cirurgia ?",
+   "settings": {
+    "DISPLAY": "UI",
+    "LIST_HEIGHT": 1,
+    "CAPTION_NO_VALUE": "",
+    "SHOW_NO_VALUE": "Y"
+   },
+   "upperName": "UF_CRM_53_1775649865946"
+  },
+  "ufCrm53_1775649919648": {
+   "type": "enumeration",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "items": [
+    {
+     "ID": "20727",
+     "VALUE": "Braço / Mão / Punho"
+    },
+    {
+     "ID": "20729",
+     "VALUE": "Perna / Joelho / Tornozelo"
+    },
+    {
+     "ID": "20731",
+     "VALUE": "Coluna / Costas"
+    },
+    {
+     "ID": "20733",
+     "VALUE": "Ombro / Clavícula"
+    },
+    {
+     "ID": "20735",
+     "VALUE": "Quadril / Bacia"
+    },
+    {
+     "ID": "20737",
+     "VALUE": "Cabeça / Crânio"
+    },
+    {
+     "ID": "20739",
+     "VALUE": "Outro"
+    }
+   ],
+   "title": "Qual foi o membro fraturado ?",
+   "listLabel": "Qual foi o membro fraturado ?",
+   "formLabel": "Qual foi o membro fraturado ?",
+   "filterLabel": "Qual foi o membro fraturado ?",
+   "settings": {
+    "DISPLAY": "UI",
+    "LIST_HEIGHT": 1,
+    "CAPTION_NO_VALUE": "",
+    "SHOW_NO_VALUE": "Y"
+   },
+   "upperName": "UF_CRM_53_1775649919648"
+  },
+  "ufCrm53_1775649980293": {
+   "type": "enumeration",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "items": [
+    {
+     "ID": "20741",
+     "VALUE": "Sim, Recebi."
+    },
+    {
+     "ID": "20743",
+     "VALUE": "Não recebi"
+    },
+    {
+     "ID": "20745",
+     "VALUE": "Não sei / Não lembro"
+    },
+    {
+     "ID": "20747",
+     "VALUE": "Eu tinha atestado, mais optei por continuar trabalhando"
+    }
+   ],
+   "title": "Recebeu Auxílio doença",
+   "listLabel": "Recebeu Auxílio doença",
+   "formLabel": "Recebeu Auxílio doença",
+   "filterLabel": "Recebeu Auxílio doença",
+   "settings": {
+    "DISPLAY": "UI",
+    "LIST_HEIGHT": 1,
+    "CAPTION_NO_VALUE": "",
+    "SHOW_NO_VALUE": "Y"
+   },
+   "upperName": "UF_CRM_53_1775649980293"
+  },
+  "ufCrm53_1775651041283": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": " Quando ocorreu o acidente?*",
+   "listLabel": " Quando ocorreu o acidente?*",
+   "formLabel": " Quando ocorreu o acidente?*",
+   "filterLabel": " Quando ocorreu o acidente?*",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1775651041283"
+  },
+  "ufCrm53_1775651057904": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": " Houve Cirurgia ?*",
+   "listLabel": " Houve Cirurgia ?*",
+   "formLabel": " Houve Cirurgia ?*",
+   "filterLabel": " Houve Cirurgia ?*",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1775651057904"
+  },
+  "ufCrm53_1775651072848": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "Qual foi o membro fraturado ? *",
+   "listLabel": "Qual foi o membro fraturado ? *",
+   "formLabel": "Qual foi o membro fraturado ? *",
+   "filterLabel": "Qual foi o membro fraturado ? *",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1775651072848"
+  },
+  "ufCrm53_1775651085742": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "Recebeu Auxílio doença*",
+   "listLabel": "Recebeu Auxílio doença*",
+   "formLabel": "Recebeu Auxílio doença*",
+   "filterLabel": "Recebeu Auxílio doença*",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1775651085742"
+  },
+  "ufCrm53_1775651693613": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "Inbox URL - Facebook",
+   "listLabel": "Inbox URL - Facebook",
+   "formLabel": "Inbox URL - Facebook",
+   "filterLabel": "Inbox URL - Facebook",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1775651693613"
+  },
+  "ufCrm53_1792334925699": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "DIAGNÓSTICO INICIAL",
+   "listLabel": "DIAGNÓSTICO INICIAL",
+   "formLabel": "DIAGNÓSTICO INICIAL",
+   "filterLabel": "DIAGNÓSTICO INICIAL",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792334925699"
+  },
+  "ufCrm53_1792334945166": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "CID 10 PRINCIPAL",
+   "listLabel": "CID 10 PRINCIPAL",
+   "formLabel": "CID 10 PRINCIPAL",
+   "filterLabel": "CID 10 PRINCIPAL",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792334945166"
+  },
+  "ufCrm53_1792334965106": {
+   "type": "rich_text",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "PRINCIPAIS SINAIS E SINTOMAS CLÍNICOS",
+   "listLabel": "PRINCIPAIS SINAIS E SINTOMAS CLÍNICOS",
+   "formLabel": "PRINCIPAIS SINAIS E SINTOMAS CLÍNICOS",
+   "filterLabel": "PRINCIPAIS SINAIS E SINTOMAS CLÍNICOS",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792334965106"
+  },
+  "ufCrm53_1792334983515": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "CONDIÇÕES QUE JUSTIFICAM A INTERNAÇÃO",
+   "listLabel": "CONDIÇÕES QUE JUSTIFICAM A INTERNAÇÃO",
+   "formLabel": "CONDIÇÕES QUE JUSTIFICAM A INTERNAÇÃO",
+   "filterLabel": "CONDIÇÕES QUE JUSTIFICAM A INTERNAÇÃO",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792334983515"
+  },
+  "ufCrm53_1792335000277": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "PRINCIPAIS RESULTADOS DE PROVAS DIAGNÓSTICAS (RESULTADO DE EXAMES REALIZADOS)",
+   "listLabel": "PRINCIPAIS RESULTADOS DE PROVAS DIAGNÓSTICAS (RESULTADO DE EXAMES REALIZADOS)",
+   "formLabel": "PRINCIPAIS RESULTADOS DE PROVAS DIAGNÓSTICAS (RESULTADO DE EXAMES REALIZADOS)",
+   "filterLabel": "PRINCIPAIS RESULTADOS DE PROVAS DIAGNÓSTICAS (RESULTADO DE EXAMES REALIZADOS)",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792335000277"
+  },
+  "ufCrm53_1792335030647": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "CARTÃO NACIONAL DE SAÚDE (CNS)",
+   "listLabel": "CARTÃO NACIONAL DE SAÚDE (CNS)",
+   "formLabel": "CARTÃO NACIONAL DE SAÚDE (CNS)",
+   "filterLabel": "CARTÃO NACIONAL DE SAÚDE (CNS)",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792335030647"
+  },
+  "ufCrm53_1792335069220": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "DESCRIÇÃO DO PROCEDIMENTO SOLICITADO",
+   "listLabel": "DESCRIÇÃO DO PROCEDIMENTO SOLICITADO",
+   "formLabel": "DESCRIÇÃO DO PROCEDIMENTO SOLICITADO",
+   "filterLabel": "DESCRIÇÃO DO PROCEDIMENTO SOLICITADO",
+   "settings": {
+    "SIZE": 20,
+    "ROWS": 1,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792335069220"
+  },
+  "ufCrm53_1792335467": {
+   "type": "string",
+   "isRequired": false,
+   "isReadOnly": false,
+   "isImmutable": false,
+   "isMultiple": false,
+   "isDynamic": true,
+   "title": "PRINCIPAIS SINAIS E SINTOMAS CLÍNICOS*",
+   "listLabel": "",
+   "formLabel": "PRINCIPAIS SINAIS E SINTOMAS CLÍNICOS*",
+   "filterLabel": "",
+   "settings": {
+    "SIZE": 80,
+    "ROWS": 10,
+    "REGEXP": "",
+    "MIN_LENGTH": 0,
+    "MAX_LENGTH": 0,
+    "DEFAULT_VALUE": ""
+   },
+   "upperName": "UF_CRM_53_1792335467"
+  }
+ },
+ "categories": [
+  {
+   "id": 101,
+   "name": "Pipeline padrão",
+   "isDefault": "Y",
+   "sort": 500
+  }
+ ],
+ "stages": [
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:NEW",
+   "NAME": "Iniciar",
+   "SORT": "10",
+   "SEMANTICS": null
+  },
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:PREPARATION",
+   "NAME": "Etapa 2",
+   "SORT": "20",
+   "SEMANTICS": null
+  },
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:UC_8R2CKC",
+   "NAME": "Etapa 3",
+   "SORT": "30",
+   "SEMANTICS": null
+  },
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:UC_SL43B7",
+   "NAME": "Etapa 4",
+   "SORT": "40",
+   "SEMANTICS": null
+  },
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:UC_2WIOW1",
+   "NAME": "Etapa 5",
+   "SORT": "50",
+   "SEMANTICS": null
+  },
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:CLIENT",
+   "NAME": "Aprovação",
+   "SORT": "60",
+   "SEMANTICS": null
+  },
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:SUCCESS",
+   "NAME": "Bem sucedido",
+   "SORT": "70",
+   "SEMANTICS": "S"
+  },
+  {
+   "ENTITY_ID": "DYNAMIC_1146_STAGE_101",
+   "STATUS_ID": "DT1146_101:FAIL",
+   "NAME": "Mal sucedido",
+   "SORT": "80",
+   "SEMANTICS": "F"
+  }
+ ]
+}
